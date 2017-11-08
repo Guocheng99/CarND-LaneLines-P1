@@ -57,7 +57,7 @@ For each segment line in Hough lines, calcute m = (y2-y1)/(x2-x1), depends on m'
 
 * One potential shortcoming would be many hyperparameter tuning. There are so many hyperparameters are set by hard coding, especially Canny thresholds and Hough lines parameters. My gut feeling is those parameters could vary a lot in different roads or under different weather conditions.
 
-* Another shortcoming could be the lane lines assumption - "they are linear y = m*x + b" - are not always true, especially when turing. We might need a 2 or 3 degree polynomial to fit the line.
+* Another shortcoming could be the lane lines assumption - "they are linear y = m*x + b" - are not always true, especially when lane is curvy. We might need a 2 or 3 degree polynomial to fit the line.
 
 
 ### 3. Possible improvements
