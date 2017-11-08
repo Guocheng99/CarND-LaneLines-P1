@@ -9,33 +9,66 @@ The goals / steps of this project are the following:
  
 
 [//]: # (Image References)
-[image1]: ./examples/grayscale.jpg "Grayscale"
-
+[image1]: ./test_images/solidWhiteCurve.jpg "Original Image"
+[image2]: ./test_images_output_gray/solidWhiteCurve.jpg "Grayscale"
+[image3]: ./test_images_output_cannyedge/solidWhiteCurve.jpg "Canny"
+[image4]: ./test_images_output_maskededge/solidWhiteCurve.jpg "Masked Edge"
+[image5]: ./test_images_output_houghlineseg/solidWhiteCurve.jpg "Segment Line"
+[image6]: ./test_images_output/solidWhiteCurve.jpg "Final Output"
 ---
 
 ## Reflection
 
-### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
-
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
-
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
-
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
-
-![alt text][image1]
+### 1. The Pipeline
 
 
-### 2. Identify potential shortcomings with your current pipeline
+The goal is to find the lane lines in the following original images, something like this.
+
+![image1]
+
+**Step 1. Turn the RGB image into grayscale**
+
+Using OpenCV, turn RGB image into grayscale.
+
+![image2]
+
+**Step 2. Using Canny to find the edges**
+
+Before applying Canny function to the image, do the Gaussian blur first (I used kenerl size 15)
+
+![image3]
+
+**Step 3. Applying region mask**
+
+Considering the camera is fixed on the top of the car, we can assume the lane lines are in some certain position of the image. We can reduce much noise when applying region mask in the image.
+
+![image4]
+
+**Step 4. Hough Transform**
+
+Using Hough Transform to find the (segmented) lines.
+
+![image5]
+
+**Step 5. Using Numpy.Polyfit to find the lane lines**
+
+Assuming that the lane lines are straight lines, which is y = m*x + b, I use Polyfit in Numpy to find the line to fit the the points.
+
+For each segment line in Hough lines, calcute m = (y2-y1)/(x2-x1), depends on m's value (<0 or >0), group the points (x1,y1) and (x2,y2) into left line points (or right line points). There are min and max threshold values for m to eliminate noise. Then use Polyfit function in Numpy to find the 2 lines.
+
+![image6]
 
 
-One potential shortcoming would be what would happen when ... 
-
-Another shortcoming could be ...
+### 2. Potential shortcomings with current pipeline
 
 
-### 3. Suggest possible improvements to your pipeline
+* One potential shortcoming would be many hyperparameter tuning. There are so many hyperparameters are set by hard coding, especially Canny thresholds and Hough lines parameters. My gut feeling is those parameters could vary a lot in different roads or under different weather conditions.
 
-A possible improvement would be to ...
+* Another shortcoming could be the lane lines assumption - "they are linear y = m*x + b" - are not always true, especially when turing. We might need a 2 or 3 degree polynomial to fit the line.
 
-Another potential improvement could be to ...
+
+### 3. Possible improvements
+
+* A possible improvement would be to use Neural Network to tune the parameters.
+
+* Another potential improvement could be to use non-linear function to fit the lane lines.
