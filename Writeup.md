@@ -8,15 +8,6 @@ The goals / steps of this project are the following:
 * Reflect on your work in a written report
  
 
-[//]: # (Image References)
-[image1]: ./test_images/solidWhiteCurve.jpg "Original Image"
-[image2]: ./test_images_output_gray/solidWhiteCurve.jpg "Grayscale"
-[image3]: ./test_images_output_cannyedge/solidWhiteCurve.jpg "Canny"
-[image4]: ./test_images_output_maskededge/solidWhiteCurve.jpg "Masked Edge"
-[image5]: ./test_images_output_houghlineseg/solidWhiteCurve.jpg "Segment Line"
-[image6]: ./test_images_output/solidWhiteCurve.jpg "Final Output"
----
-
 ## Reflection
 
 ### 1. The Pipeline
@@ -24,31 +15,33 @@ The goals / steps of this project are the following:
 
 The goal is to find the lane lines in the following original images, something like this.
 
-![image1]
+<img src="test_images/solidWhiteCurve.jpg" width="480" alt="Original Image" />
 
 **Step 1. Turn the RGB image into grayscale**
 
 Using OpenCV, turn RGB image into grayscale.
 
-![image2]
+<img src="test_images_output_gray/solidWhiteCurve.jpg " width="480" alt="Grayscale" />
 
 **Step 2. Using Canny to find the edges**
 
 Before applying Canny function to the image, do the Gaussian blur first (I used kenerl size 15)
 
-![image3]
+
+<img src="test_images_output_cannyedge/solidWhiteCurve.jpg" width="480" alt="Canny" />
 
 **Step 3. Applying region mask**
 
 Considering the camera is fixed on the top of the car, we can assume the lane lines are in some certain position of the image. We can reduce much noise when applying region mask in the image.
 
-![image4]
+<img src="test_images_output_maskededge/solidWhiteCurve.jpg" width="480" alt="Masked Edge" />
 
 **Step 4. Hough Transform**
 
 Using Hough Transform to find the (segmented) lines.
 
-![image5]
+
+<img src="test_images_output_houghlineseg/solidWhiteCurve.jpg" width="480" alt="Segment Line" />
 
 **Step 5. Using Numpy.Polyfit to find the lane lines**
 
@@ -56,8 +49,8 @@ Assuming that the lane lines are straight lines, which is y = m*x + b, I use Pol
 
 For each segment line in Hough lines, calcute m = (y2-y1)/(x2-x1), depends on m's value (<0 or >0), group the points (x1,y1) and (x2,y2) into left line points (or right line points). There are min and max threshold values for m to eliminate noise. Then use Polyfit function in Numpy to find the 2 lines.
 
-![image6]
 
+<img src="test_images_output/solidWhiteCurve.jpg" width="480" alt="Final Output" />
 
 ### 2. Potential shortcomings with current pipeline
 

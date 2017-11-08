@@ -1,7 +1,8 @@
 # **Udacity Self-Driving Car Nanodegree - Finding Lane Lines on the Road** 
 
 
-##Overview
+Overview
+---
 
 This is the first project of Udacity Self-Driving Car Nanodegree. This project is to identify lane lines on the road in images and videos.
 
@@ -14,7 +15,7 @@ This is the first project of Udacity Self-Driving Car Nanodegree. This project i
 > To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
 
 
-This repo contains the code, brief write up and output images and videos.
+This repo contains the code, write up and output images and videos.
 
 **Output Image**
 
@@ -26,7 +27,8 @@ This repo contains the code, brief write up and output images and videos.
   <source src="test_videos_output/solidWhiteRight.mp4" type="video/mp4">
 </video>
 
-##Prerequisites
+Prerequisites
+---
 
 * Python 3.6
 * Numpy
@@ -38,7 +40,9 @@ This repo contains the code, brief write up and output images and videos.
 * ffmpeg
 * Moviepy
 
-##Files
+Files
+---
+
 * P1.ipynb - The main code
 * Writeup.md - The brief explanation of the pipeline.
 * Main Outputs
@@ -51,9 +55,9 @@ This repo contains the code, brief write up and output images and videos.
   * [test_images_output_maskededge](test_images_output_maskededge)
   * [test_images_output_houghlineseg](test_images_output_houghlineseg) 
  
-##Setting Up
 
-from Udacity
+From Udacity
+---
 >
 > ##Installation
 > 
