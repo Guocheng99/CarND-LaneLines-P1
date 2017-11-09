@@ -38,16 +38,25 @@ Considering the camera is fixed on the top of the car, we can assume the lane li
 
 **Step 4. Hough Transform**
 
-Using Hough Transform to find the (segmented) lines.
+Using Hough Transform to find the lines.
 
 
 <img src="test_images_output_houghlineseg/solidWhiteCurve.jpg" width="480" alt="Segment Line" />
+
+**Update After Review:**  Per reviewer advice, tweaking the values of parameters of hough transformation as following:
+
+> threshold ~ 50 (from 10)
+> min_line_len  ~ 100 (from 20)
+> max_line_gap ~ 160 (from 1)
+
+These changes lead to better results. The intuition is that with much higher value of threshold and min_line_len will eliminate most noise, but at the same time it will sacrifice the quality of detetion of the segmented lane line (as the left line in the example image). However higher max_line_gap will compensate the loss. After Step 5, these changes improve the  
+
 
 **Step 5. Using Numpy.Polyfit to find the lane lines**
 
 Assuming that the lane lines are straight lines, which is y = m*x + b, I use Polyfit in Numpy to find the line to fit the the points.
 
-For each segment line in Hough lines, calcute m = (y2-y1)/(x2-x1), depends on m's value (<0 or >0), group the points (x1,y1) and (x2,y2) into left line points (or right line points). There are min and max threshold values for m to eliminate noise. Then use Polyfit function in Numpy to find the 2 lines.
+For each segment line in Hough lines, calculate m = (y2-y1)/(x2-x1), depends on m's value (<0 or >0), group the points (x1,y1) and (x2,y2) into left line points (or right line points). There are min and max threshold values for m to eliminate noise. Then use Polyfit function in Numpy to find the 2 lines.
 
 
 <img src="test_images_output/solidWhiteCurve.jpg" width="480" alt="Final Output" />
