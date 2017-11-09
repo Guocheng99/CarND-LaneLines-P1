@@ -66,7 +66,7 @@ For each segment line in Hough lines, calculate m = (y2-y1)/(x2-x1), depends on 
 
 * One potential shortcoming is this method needs many hyperparameter tuning. There are so many hyperparameters are set by hand with hard coding, especially Canny thresholds and Hough transformation parameters. My gut feeling is those parameters could vary a lot under different roads and/or weather conditions.
 
-* Another shortcoming would be in Step 5. The lane lines assumption - "they are linear y = m*x + b" - may not be always true, especially when lane is curvy. We might need a 2 or 3 degree polynomial to fit the line (the potential challenge for this method is how to prevent over-fitting).
+* Another shortcoming would be in Step 5. The lane lines assumption - "they are linear y = m*x + b" - may not be always true, especially when lane is curvy (The challenge video is the similar situation). We might need a 2 or 3 degree polynomial to fit the line (the potential challenge for this method is how to prevent over-fitting).
 
 
 ### 3. Possible improvements
