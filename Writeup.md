@@ -45,9 +45,9 @@ Using Hough Transform to find the lines.
 
 **Update After Review:**  Per reviewer advice, tweaking the values of parameters of hough transformation as following:
 
-> threshold ~ 50 (from 10)
-> min_line_len  ~ 100 (from 20)
-> max_line_gap ~ 160 (from 1)
+> * threshold ~ 50 (from 10)
+> * min_line_len  ~ 100 (from 20)
+> * max_line_gap ~ 160 (from 1)
 
 These changes lead to better results. The intuition is that with much higher value of threshold and min_line_len will eliminate most noise, but at the same time it will sacrifice the quality of detetion of the segmented lane line (as the left line in the example image). However higher max_line_gap will compensate the loss. After Step 5, these changes improve the results. 
 
