@@ -49,7 +49,7 @@ Using Hough Transform to find the lines.
 > min_line_len  ~ 100 (from 20)
 > max_line_gap ~ 160 (from 1)
 
-These changes lead to better results. The intuition is that with much higher value of threshold and min_line_len will eliminate most noise, but at the same time it will sacrifice the quality of detetion of the segmented lane line (as the left line in the example image). However higher max_line_gap will compensate the loss. After Step 5, these changes improve the  
+These changes lead to better results. The intuition is that with much higher value of threshold and min_line_len will eliminate most noise, but at the same time it will sacrifice the quality of detetion of the segmented lane line (as the left line in the example image). However higher max_line_gap will compensate the loss. After Step 5, these changes improve the results. 
 
 
 **Step 5. Using Numpy.Polyfit to find the lane lines**
@@ -64,13 +64,13 @@ For each segment line in Hough lines, calculate m = (y2-y1)/(x2-x1), depends on 
 ### 2. Potential shortcomings with current pipeline
 
 
-* One potential shortcoming would be many hyperparameter tuning. There are so many hyperparameters are set by hard coding, especially Canny thresholds and Hough lines parameters. My gut feeling is those parameters could vary a lot in different roads or under different weather conditions.
+* One potential shortcoming is this method needs many hyperparameter tuning. There are so many hyperparameters are set by hand with hard coding, especially Canny thresholds and Hough transformation parameters. My gut feeling is those parameters could vary a lot under different roads and/or weather conditions.
 
-* Another shortcoming could be the lane lines assumption - "they are linear y = m*x + b" - are not always true, especially when lane is curvy. We might need a 2 or 3 degree polynomial to fit the line.
+* Another shortcoming would be in Step 5. The lane lines assumption - "they are linear y = m*x + b" - may not be always true, especially when lane is curvy. We might need a 2 or 3 degree polynomial to fit the line (the potential challenge for this method is how to prevent over-fitting).
 
 
 ### 3. Possible improvements
 
-* A possible improvement would be to use Neural Network to tune the parameters.
+* A possible improvement would be to use Neural Network to handel the parameters tuning.
 
-* Another potential improvement could be to use non-linear function to fit the lane lines.
+* Another potential improvement would be to use non-linear function to fit the lane lines.
