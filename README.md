@@ -56,9 +56,11 @@ Files
   * [test_images_output_houghlineseg](test_images_output_houghlineseg) 
  
 
-From Udacity
+Reference
 ---
->
+> ## The “Finding Lane Lines” Project
+> [Good Article](https://medium.com/udacity/finding-lane-lines-project-b737aa2de055)
+> 
 > ##Installation
 > 
 > ###If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
