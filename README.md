@@ -1,84 +1,76 @@
-# **Udacity Self-Driving Car Nanodegree - Finding Lane Lines on the Road** 
+# **Writeup: Finding Lane Lines on the Road** 
 
+## Goal
 
-Overview
----
+The goals / steps of this project are the following:
 
-This is the first project of Udacity Self-Driving Car Nanodegree. This project is to identify lane lines on the road in images and videos.
-
-> When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
-> 
-> In this project you will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
-> 
-> To complete the project, two files will be submitted: a file containing project code and a file containing a brief write up explaining your solution. We have included template files to be used both for the [code](https://github.com/udacity/CarND-LaneLines-P1/blob/master/P1.ipynb) and the [writeup](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md).The code file is called P1.ipynb and the writeup template is writeup_template.md 
-> 
-> To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
-
-
-This repo contains the code, write up and output images and videos.
-
-**Output Image**
-
-<img src="test_images_output/solidWhiteCurve.jpg" width="480" alt="Driving Lane Image" />
-
-**Output Video**
-
-<video width="480" height="270" controls>
-  <source src="test_videos_output/solidWhiteRight.mp4" type="video/mp4">
-</video>
-
-Prerequisites
----
-
-* Python 3.6
-* Numpy
-* OpenCV
-* Matplotlib
-* Jupyter
-* Pillow
-* Scipy
-* ffmpeg
-* Moviepy
-
-Files
----
-
-* P1.ipynb - The main code
-* Writeup.md - The brief explanation of the pipeline.
-* Main Outputs
-  * [test_images_output](test_images_output) 
-  * [test_videos_output](test_videos_output)
-* Step outputs
-  * [test_images_output_gray](test_images_output_gray)
-  * [test_images_output_cannyedge](test_images_output_cannyedge)
-  * [test_images_output_houghline](test_images_output_houghline)
-  * [test_images_output_maskededge](test_images_output_maskededge)
-  * [test_images_output_houghlineseg](test_images_output_houghlineseg) 
+* Make a pipeline that finds lane lines on the road
+* Reflect on your work in a written report
  
 
-Reference
----
-> ## The “Finding Lane Lines” Project
-> [Good Article](https://medium.com/udacity/finding-lane-lines-project-b737aa2de055)
-> 
-> ##Installation
-> 
-> ###If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
-> 
-> **Step 1:** Set up the [CarND Term1 Starter Kit](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/83ec35ee-1e02-48a5-bdb7-d244bd47c2dc/lessons/8c82408b-a217-4d09-b81d-1bda4c6380ef/concepts/4f1870e0-3849-43e4-b670-12e6f2d4b7a7) if you haven't already.
-> 
-> **Step 2:** Open the code in a Jupyter Notebook
-> 
-> You will complete the project code in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out <A HREF="https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python" target="_blank">Cyrille Rossant's Basics of Jupyter Notebook and Python</A> to get started.
-> 
-> Jupyter is an Ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, use terminal to navigate to your project directory and then run the following command at the terminal prompt (be sure you've activated your Python 3 carnd-term1 environment as described in the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) installation instructions!):
-> 
->`> jupyter notebook`
->
-> A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
-> 
-> **Step 3:** Complete the project and submit both the Ipython notebook and the project writeup
-> 
-> ## How to write a README
-> A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+## Reflection
 
+### 1. The Pipeline
+
+
+The goal is to find the lane lines in the following original images, something like this.
+
+<img src="test_images/solidWhiteCurve.jpg" width="480" alt="Original Image" />
+
+**Step 1. Turn the RGB image into grayscale**
+
+Using OpenCV, turn RGB image into grayscale.
+
+<img src="test_images_output_gray/solidWhiteCurve.jpg " width="480" alt="Grayscale" />
+
+**Step 2. Using Canny to find the edges**
+
+Before applying Canny function to the image, do the Gaussian blur first (I used kenerl size 15)
+
+
+<img src="test_images_output_cannyedge/solidWhiteCurve.jpg" width="480" alt="Canny" />
+
+**Step 3. Applying region mask**
+
+Considering the camera is fixed on the top of the car, we can assume the lane lines are in some certain position of the image. We can reduce much noise when applying region mask in the image.
+
+<img src="test_images_output_maskededge/solidWhiteCurve.jpg" width="480" alt="Masked Edge" />
+
+**Step 4. Hough Transform**
+
+Using Hough Transform to find the lines.
+
+
+<img src="test_images_output_houghlineseg/solidWhiteCurve.jpg" width="480" alt="Segment Line" />
+
+**Update After Review:**  Per reviewer advice, tweaking the values of parameters of hough transformation as following:
+
+> * threshold ~ 50 (from 10)
+> * min_line_len  ~ 100 (from 20)
+> * max_line_gap ~ 160 (from 1)
+
+These changes lead to better results. The intuition is that with much higher value of threshold and min_line_len will eliminate most noise, but at the same time it will sacrifice the quality of detetion of the segmented lane line (as the left line in the example image). However higher max_line_gap will compensate the loss. After Step 5, these changes improve the results. 
+
+
+**Step 5. Using Numpy.Polyfit to find the lane lines**
+
+Assuming that the lane lines are straight lines, which is y = m*x + b, I use Polyfit in Numpy to find the line to fit the the points.
+
+For each segment line in Hough lines, calculate m = (y2-y1)/(x2-x1), depends on m's value (<0 or >0), group the points (x1,y1) and (x2,y2) into left line points (or right line points). There are min and max threshold values for m to eliminate noise. Then use Polyfit function in Numpy to find the 2 lines.
+
+
+<img src="test_images_output/solidWhiteCurve.jpg" width="480" alt="Final Output" />
+
+### 2. Potential shortcomings with current pipeline
+
+
+* One potential shortcoming is this method needs many hyperparameter tuning. There are so many hyperparameters are set by hands with hard coding, especially Canny thresholds and Hough transformation parameters. My gut feeling is that those parameters could vary a lot under different roads and/or weather conditions.
+
+* Another shortcoming would be in Step 5. The lane lines assumption - "they are linear y = m*x + b" - may not be always true, especially when lane is curvy (The challenge video is the similar situation). We might need a 2 or 3 degree polynomial to fit the line (the potential challenge for this method is how to prevent over-fitting).
+
+
+### 3. Possible improvements
+
+* A possible improvement would be to use Neural Network to handel the parameters tuning.
+
+* Another potential improvement would be to use non-linear function to fit the lane lines.
